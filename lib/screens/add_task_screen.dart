@@ -15,6 +15,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   final _descriptionController = TextEditingController();
   int _quadrant = 1;
   DateTime _dueDate = DateTime.now();
+  TaskPriority _priority = TaskPriority.medium; // 设置默认优先级为中等
 
   void _submitTask(BuildContext context) {
     if (!_formKey.currentState!.validate()) {
@@ -27,6 +28,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       description: _descriptionController.text,
       quadrant: _quadrant,
       dueDate: _dueDate,
+      priority: _priority, // 使用选定的优先级
     );
 
     Provider.of<TasksProvider>(context, listen: false).addTask(newTask);
@@ -74,6 +76,21 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   });
                 },
                 decoration: InputDecoration(labelText: '选择象限'),
+              ),
+              DropdownButtonFormField<TaskPriority>(
+                value: _priority,
+                items: TaskPriority.values.map((priority) {
+                  return DropdownMenuItem<TaskPriority>(
+                    value: priority,
+                    child: Text(priority.toShortString()), // 使用扩展方法将枚举值转换为字符串
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _priority = value!;
+                  });
+                },
+                decoration: InputDecoration(labelText: '选择优先级'),
               ),
               ElevatedButton(
                 onPressed: () async {

@@ -6,6 +6,7 @@ class Task {
   final DateTime dueDate; // 任务截止日期
   final int quadrant; // 任务所属象限（1-4）
   final bool isCompleted; // 任务的完成状态
+  final TaskPriority priority; // 任务优先级
 
   // 构造函数，用于创建 Task 对象
   Task({
@@ -14,25 +15,23 @@ class Task {
     required this.description,
     required this.quadrant,
     required this.dueDate,
+    required this.priority,
     this.isCompleted = false,
   });
 }
 
-// class Task {
-//   final String id;
-//   final String title;
-//   final String description;
-//   final int quadrant;
-//   final DateTime dueDate;
-//   final bool isCompleted;
-//
-//   Task({
-//     required this.id,
-//     required this.title,
-//     required this.description,
-//     required this.quadrant,
-//     required this.dueDate,
-//     this.isCompleted = false,
-//   });
-// }
+enum TaskPriority { low, medium, high }
 
+// 在 models/task.dart 文件中添加以下扩展方法
+extension TaskPriorityExtension on TaskPriority {
+  String toShortString() {
+    switch (this) {
+      case TaskPriority.low:
+        return '低';
+      case TaskPriority.medium:
+        return '中';
+      case TaskPriority.high:
+        return '高';
+    }
+  }
+}

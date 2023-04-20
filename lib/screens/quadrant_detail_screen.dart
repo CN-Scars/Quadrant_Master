@@ -29,7 +29,13 @@ class QuadrantDetailScreen extends StatelessWidget {
               },
             ),
             title: Text(task.title),
-            subtitle: Text(task.description),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(task.description),
+                Text('优先级：${task.priority.toShortString()}'),
+              ],
+            ),
             trailing: Text(task.dueDate.toString()),
             onLongPress: () {
               showDialog(

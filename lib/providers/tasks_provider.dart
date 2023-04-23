@@ -45,4 +45,14 @@ class TasksProvider extends ChangeNotifier {
     // 通知侦听器数据已更改
     notifyListeners();
   }
+
+  // 更新任务
+  void updateTask(Task updatedTask) {
+    final taskIndex = _tasks.indexWhere((task) => task.id == updatedTask.id);
+    if (taskIndex != -1) {
+      _tasks[taskIndex] = updatedTask;
+      // 通知侦听器数据已更改
+      notifyListeners();
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quadrant_master/providers/tasks_provider.dart';
 import 'package:quadrant_master/screens/home_screen.dart';
+import 'package:quadrant_master/screens/edit_task_screen.dart';
 
 void main() {
   runApp(const MyApp());

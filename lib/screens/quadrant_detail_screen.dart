@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quadrant_master/models/task.dart';
 import 'package:quadrant_master/providers/tasks_provider.dart';
+import 'package:quadrant_master/screens/edit_task_screen.dart';
 
 class QuadrantDetailScreen extends StatelessWidget {
   final int quadrant;
@@ -37,6 +38,13 @@ class QuadrantDetailScreen extends StatelessWidget {
               ],
             ),
             trailing: Text(task.dueDate.toString()),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => EditTaskScreen(task: task),
+                ),
+              );
+            },
             onLongPress: () {
               showDialog(
                 context: context,

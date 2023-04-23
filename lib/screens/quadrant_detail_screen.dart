@@ -26,9 +26,37 @@ class QuadrantDetailScreen extends StatelessWidget {
             leading: Checkbox(
               value: task.isCompleted,
               onChanged: (bool? value) {
-                tasksProvider.toggleTaskCompletion(task.id, value ?? false);
+                if (value != null && value) {
+                  tasksProvider.toggleTaskCompletion(task.id, value);
+
+                  int originalIndex = tasks.indexOf(task); // 记住任务的原始索引
+                  tasksProvider.deleteTask(task.id);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('任务已完成'),
+                      action: SnackBarAction(
+                        label: '撤销',
+                        // 回调
+                        onPressed: () {
+                          final undoneTask = Task(
+                            id: task.id,
+                            title: task.title,
+                            description: task.description,
+                            quadrant: task.quadrant,
+                            dueDate: task.dueDate,
+                            isCompleted: false, // 将任务标记为未完成
+                            priority: task.priority,
+                          );
+                          tasksProvider.insertTaskAtIndex(undoneTask, originalIndex); // 使用原始索引插入任务
+                        },
+                      ),
+                    ),
+                  );
+                }
               },
             ),
+
             title: Text(task.title),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

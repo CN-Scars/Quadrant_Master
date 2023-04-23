@@ -55,4 +55,10 @@ class TasksProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // 在指定索引处插入任务，以便在撤销操作时，可以将任务插回到原来的位置
+  void insertTaskAtIndex(Task task, int index) {
+    _tasks.insert(index, task);
+    notifyListeners();
+  }
 }

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:quadrant_master/models/task.dart';
 import 'package:quadrant_master/providers/tasks_provider.dart';
+import 'package:quadrant_master/screens/edit_task_screen.dart'; // 新增导入
 import 'package:provider/provider.dart';
 
-// TaskList类用于显示任务列表
 class TaskList extends StatelessWidget {
   final List<Task> tasks;
 
   TaskList({required this.tasks});
 
-  // _showArchivedSnackBar方法用于显示任务已归档的SnackBar
+  // 显示任务已归档的SnackBar
   void _showArchivedSnackBar(BuildContext context, Task task, TasksProvider tasksProvider) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -24,7 +24,7 @@ class TaskList extends StatelessWidget {
     );
   }
 
-  // _showUnarchivedSnackBar方法用于显示任务已恢复为未完成状态的SnackBar
+  // 显示任务已恢复为未完成状态的SnackBar
   void _showUnarchivedSnackBar(BuildContext context, Task task, TasksProvider tasksProvider) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -39,12 +39,39 @@ class TaskList extends StatelessWidget {
     );
   }
 
-  // build方法用于构建任务列表的UI
+  // 显示删除任务确认对话框
+  Future<void> _showDeleteConfirmationDialog(BuildContext context, Task task, TasksProvider tasksProvider) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // 点击外部区域时不关闭对话框
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('确认删除'),
+          content: Text('您确定要删除任务 "${task.title}" 吗？'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('取消'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('删除'),
+              onPressed: () {
+                tasksProvider.deleteTask(task.id);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final tasksProvider = Provider.of<TasksProvider>(context);
 
-    // ListView.builder用于动态创建任务列表的每一项
     return ListView.builder(
       itemCount: tasks.length,
       itemBuilder: (context, index) {
@@ -52,7 +79,6 @@ class TaskList extends StatelessWidget {
         return ListTile(
           leading: Checkbox(
             value: task.isCompleted,
-            // 当复选框的勾选状态发生改变时，根据任务当前的完成状态显示相应的SnackBar
             onChanged: (bool? value) {
               if (value != null) {
                 tasksProvider.toggleTaskCompletion(task.id, value);
@@ -73,6 +99,16 @@ class TaskList extends StatelessWidget {
             ],
           ),
           trailing: Text(task.dueDate.toString()),
+          onTap: () { // 新增onTap事件，用于导航到任务编辑页面
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => EditTaskScreen(task: task),
+              ),
+            );
+          },
+          onLongPress: () { // 新增长按事件，用于显示删除任务确认对话框
+            _showDeleteConfirmationDialog(context, task, tasksProvider);
+          },
         );
       },
     );

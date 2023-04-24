@@ -1,3 +1,5 @@
+// lib/providers/tasks_provider.dart
+
 import 'package:flutter/foundation.dart';
 import 'package:quadrant_master/models/task.dart';
 
@@ -12,14 +14,23 @@ class TasksProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // List<Task> getTasksByQuadrant(int quadrant) {
+  //   // 筛选出指定象限的任务
+  //   List<Task> filteredTasks = _tasks.where((task) => task.quadrant == quadrant).toList();
+  //
+  //   // 根据任务优先级对任务进行排序
+  //   filteredTasks.sort((a, b) => b.priority.index.compareTo(a.priority.index));
+  //
+  //   return filteredTasks;
+  // }
   List<Task> getTasksByQuadrant(int quadrant) {
-    // 筛选出指定象限的任务
     List<Task> filteredTasks = _tasks.where((task) => task.quadrant == quadrant).toList();
-
-    // 根据任务优先级对任务进行排序
     filteredTasks.sort((a, b) => b.priority.index.compareTo(a.priority.index));
-
     return filteredTasks;
+  }
+
+  List<Task> getCompletedTasks() {
+    return _tasks.where((task) => task.isCompleted).toList();
   }
 
   void toggleTaskCompletion(String taskId, bool isCompleted) {
@@ -60,5 +71,12 @@ class TasksProvider extends ChangeNotifier {
   void insertTaskAtIndex(Task task, int index) {
     _tasks.insert(index, task);
     notifyListeners();
+  }
+
+  // 获取未归档的任务
+  List<Task> getUnarchivedTasksByQuadrant(int quadrant) {
+    List<Task> filteredTasks = _tasks.where((task) => task.quadrant == quadrant && !task.isCompleted).toList();
+    filteredTasks.sort((a, b) => b.priority.index.compareTo(a.priority.index));
+    return filteredTasks;
   }
 }

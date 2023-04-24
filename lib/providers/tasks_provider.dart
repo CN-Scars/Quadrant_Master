@@ -14,17 +14,11 @@ class TasksProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // List<Task> getTasksByQuadrant(int quadrant) {
-  //   // 筛选出指定象限的任务
-  //   List<Task> filteredTasks = _tasks.where((task) => task.quadrant == quadrant).toList();
-  //
-  //   // 根据任务优先级对任务进行排序
-  //   filteredTasks.sort((a, b) => b.priority.index.compareTo(a.priority.index));
-  //
-  //   return filteredTasks;
-  // }
   List<Task> getTasksByQuadrant(int quadrant) {
+    // 筛选出指定象限的任务
     List<Task> filteredTasks = _tasks.where((task) => task.quadrant == quadrant).toList();
+
+    // 根据任务优先级对任务进行排序
     filteredTasks.sort((a, b) => b.priority.index.compareTo(a.priority.index));
     return filteredTasks;
   }

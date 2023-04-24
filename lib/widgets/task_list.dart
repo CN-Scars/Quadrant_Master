@@ -8,6 +8,20 @@ class TaskList extends StatelessWidget {
 
   TaskList({required this.tasks});
 
+  void _showArchivedSnackBar(BuildContext context, Task task, TasksProvider tasksProvider) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('任务已归档: ${task.title}'),
+        action: SnackBarAction(
+          label: '撤销',
+          onPressed: () {
+            tasksProvider.toggleTaskCompletion(task.id, false);
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final tasksProvider = Provider.of<TasksProvider>(context);
@@ -22,6 +36,9 @@ class TaskList extends StatelessWidget {
             onChanged: (bool? value) {
               if (value != null) {
                 tasksProvider.toggleTaskCompletion(task.id, value);
+                if (value) {
+                  _showArchivedSnackBar(context, task, tasksProvider);
+                }
               }
             },
           ),

@@ -73,4 +73,12 @@ class TasksProvider extends ChangeNotifier {
     filteredTasks.sort((a, b) => b.priority.index.compareTo(a.priority.index));
     return filteredTasks;
   }
+
+  List<Task> searchTasks(String query) {
+    return _tasks
+        .where((task) =>
+    task.title.toLowerCase().contains(query.toLowerCase()) ||
+        task.description.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  }
 }

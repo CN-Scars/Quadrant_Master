@@ -32,6 +32,8 @@ dependencies:
     sdk: flutter
   provider: ^6.0.0
   intl: ^0.17.0
+  url_launcher: ^6.1.10 # 添加url_launcher包，用于打开外部链接
+  material_design_icons_flutter: 6.0.7096 # Material图标包
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

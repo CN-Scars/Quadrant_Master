@@ -6,6 +6,7 @@ import 'package:quadrant_master/screens/search_task_screen.dart'; // 新增导�
 import 'package:quadrant_master/widgets/quadrant_grid.dart';
 import 'package:provider/provider.dart';
 import 'package:quadrant_master/providers/tasks_provider.dart';
+import 'package:quadrant_master/screens/about_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -44,6 +45,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => CompletedTasksScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.info_outline),
+              title: Text('关于'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => AboutScreen(),
                   ),
                 );
               },

@@ -1,42 +1,3 @@
-// import 'package:flutter/material.dart';
-//
-// class QuadrantGrid extends StatelessWidget {
-//   final Function(int) onTap;
-//
-//   QuadrantGrid({required this.onTap});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return GridView.count(
-//       crossAxisCount: 2,
-//       children: List.generate(4, (index) {
-//         return InkWell(
-//           onTap: () => onTap(index + 1),
-//           child: Container(
-//             margin: const EdgeInsets.all(8.0),
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(12.0),
-//               color: Colors.blue.shade200,
-//             ),
-//             child: Center(
-//               child: Text(
-//                 // 修改象限标题
-//                 index == 0
-//                     ? '重要且紧急'
-//                     : index == 1
-//                     ? '重要不紧急'
-//                     : index == 2
-//                     ? '紧急不重要'
-//                     : '不重要且不紧急',
-//                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-//               ),
-//             ),
-//           ),
-//         );
-//       }),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 
 class QuadrantGrid extends StatelessWidget {
@@ -65,11 +26,12 @@ class QuadrantGrid extends StatelessWidget {
                       text: index == 0
                           ? '重要'
                           : index == 1
-                          ? '重要'
-                          : index == 2
-                          ? '紧急'
-                          : '不重要',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                              ? '重要'
+                              : index == 2
+                                  ? '紧急'
+                                  : '不重要',
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     TextSpan(
                       text: '\n',
@@ -78,11 +40,12 @@ class QuadrantGrid extends StatelessWidget {
                       text: index == 0
                           ? '且紧急'
                           : index == 1
-                          ? '不紧急'
-                          : index == 2
-                          ? '不重要'
-                          : '且紧急',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                              ? '不紧急'
+                              : index == 2
+                                  ? '不重要'
+                                  : '且紧急',
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

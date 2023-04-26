@@ -1,7 +1,10 @@
 // lib/providers/tasks_provider.dart
 
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:quadrant_master/models/task.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TasksProvider extends ChangeNotifier {
   List<Task> _tasks = [];
@@ -10,6 +13,8 @@ class TasksProvider extends ChangeNotifier {
 
   void addTask(Task task) {
     _tasks.add(task);
+    saveTasks(); // 保存任务列表
+
     // 通知侦听器数据已更改
     notifyListeners();
   }
@@ -39,6 +44,8 @@ class TasksProvider extends ChangeNotifier {
         isCompleted: isCompleted,
         priority: _tasks[taskIndex].priority,
       );
+      saveTasks(); // 保存任务列表
+
       // 通知侦听器数据已更改
       notifyListeners();
     }
@@ -47,6 +54,8 @@ class TasksProvider extends ChangeNotifier {
   // 删除指定ID的任务
   void deleteTask(String taskId) {
     _tasks.removeWhere((task) => task.id == taskId);
+    saveTasks(); // 保存任务列表
+
     // 通知侦听器数据已更改
     notifyListeners();
   }
@@ -56,6 +65,8 @@ class TasksProvider extends ChangeNotifier {
     final taskIndex = _tasks.indexWhere((task) => task.id == updatedTask.id);
     if (taskIndex != -1) {
       _tasks[taskIndex] = updatedTask;
+      saveTasks(); // 保存任务列表
+
       // 通知侦听器数据已更改
       notifyListeners();
     }
@@ -80,5 +91,23 @@ class TasksProvider extends ChangeNotifier {
     task.title.toLowerCase().contains(query.toLowerCase()) ||
         task.description.toLowerCase().contains(query.toLowerCase()))
         .toList();
+  }
+
+  // 保存任务列表
+  Future<void> saveTasks() async {
+    final prefs = await SharedPreferences.getInstance();
+    final tasksJson = jsonEncode(tasks.map((task) => task.toJson()).toList());
+    prefs.setString('tasks', tasksJson);
+  }
+
+  // 加载任务列表
+  Future<void> loadTasks() async {
+    final prefs = await SharedPreferences.getInstance();
+    final tasksJson = prefs.getString('tasks');
+    if (tasksJson != null) {
+      List<dynamic> tasksList = jsonDecode(tasksJson);
+      _tasks.clear();
+      _tasks.addAll(tasksList.map((json) => Task.fromJson(json)).toList());
+    }
   }
 }

@@ -13,7 +13,8 @@ import 'package:quadrant_master/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    // 由于\在 main.dart 文件中移除了 const MyApp() 的 const 修饰符，因此在 widget_test.dart 中也需要将其更改为非 const 构造函数。
+    await tester.pumpWidget(MyApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

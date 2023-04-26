@@ -18,6 +18,32 @@ class Task {
     required this.priority,
     this.isCompleted = false,
   });
+
+  // 将任务对象转换为 JSON
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'description': description,
+    'quadrant': quadrant,
+    'dueDate': dueDate.toIso8601String(),
+    'priority': priority.index,
+    'isCompleted': isCompleted,
+    // 可以在此根据需要添加其他字段
+  };
+
+  // 从 JSON 创建任务
+  factory Task.fromJson(Map<String, dynamic> json) {
+    return Task(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      quadrant: json['quadrant'],
+      dueDate: DateTime.parse(json['dueDate']),
+      priority: TaskPriority.values[json['priority']],
+      isCompleted: json['isCompleted'],
+      // 可以在此根据需要添加其他字段
+    );
+  }
 }
 
 enum TaskPriority { low, medium, high }

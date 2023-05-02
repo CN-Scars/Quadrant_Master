@@ -35,6 +35,7 @@ dependencies:
   url_launcher: ^6.1.10 # 添加url_launcher包，用于打开外部链接
   material_design_icons_flutter: 6.0.7096 # Material图标包
   shared_preferences: ^2.0.13 # 在本地持久化存储应用数据
+  flutter_sequence_animation: ^4.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -10,6 +10,21 @@ class QuadrantDetailScreen extends StatelessWidget {
   const QuadrantDetailScreen({required this.quadrant, Key? key})
       : super(key: key);
 
+  String getQuadrantTitle(int quadrant) {
+    switch (quadrant) {
+      case 1:
+        return '重要且紧急';
+      case 2:
+        return '重要不紧急';
+      case 3:
+        return '紧急不重要';
+      case 4:
+        return '不重要且紧急';
+      default:
+        return '未知象限';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final tasksProvider = Provider.of<TasksProvider>(context);
@@ -17,7 +32,7 @@ class QuadrantDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('象限 $quadrant'),
+        title: Text(getQuadrantTitle(quadrant)),
       ),
       body: Hero(
         tag: 'quadrant-$quadrant',

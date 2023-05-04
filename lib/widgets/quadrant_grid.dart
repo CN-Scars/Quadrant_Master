@@ -54,6 +54,7 @@ class _QuadrantGridState extends State<QuadrantGrid>
                           tasks[index].id, !newValue);
                     },
                   ),
+                  duration: Duration(seconds: 3), // 设置SnackBar的持续时长为3秒
                 ),
               );
             },

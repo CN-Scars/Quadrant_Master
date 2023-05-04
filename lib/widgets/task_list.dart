@@ -20,6 +20,7 @@ class TaskList extends StatelessWidget {
             tasksProvider.toggleTaskCompletion(task.id, false);
           },
         ),
+        duration: Duration(seconds: 3), // 设置SnackBar的持续时长为3秒
       ),
     );
   }
@@ -35,6 +36,7 @@ class TaskList extends StatelessWidget {
             tasksProvider.toggleTaskCompletion(task.id, true);
           },
         ),
+        duration: Duration(seconds: 3), // 设置SnackBar的持续时长为3秒
       ),
     );
   }

@@ -44,6 +44,10 @@ class _QuadrantGridState extends State<QuadrantGrid>
             value: tasks[index].isCompleted,
             onChanged: (newValue) {
               tasksProvider.toggleTaskCompletion(tasks[index].id, newValue!);
+              // 移除当前的SnackBar，实现替换效果
+              final scaffoldMessenger = ScaffoldMessenger.of(context);
+              scaffoldMessenger.hideCurrentSnackBar();
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('任务已归档'),
@@ -54,9 +58,13 @@ class _QuadrantGridState extends State<QuadrantGrid>
                           tasks[index].id, !newValue);
                     },
                   ),
-                  duration: Duration(seconds: 3), // 设置SnackBar的持续时长为3秒
+                  // duration: Duration(seconds: 3), // 设置SnackBar的持续时长为3秒
                 ),
               );
+              // 由于未知原因，SnackBar的duration属性不会生效，只能使用延时执行的方式在SnackBar持续3s后手动移除
+              Future.delayed(Duration(seconds: 3), () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              });
             },
           ),
           title: Text(tasks[index].title),

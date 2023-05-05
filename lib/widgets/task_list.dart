@@ -10,7 +10,12 @@ class TaskList extends StatelessWidget {
   TaskList({required this.tasks});
 
   // 显示任务已归档的SnackBar
-  void _showArchivedSnackBar(BuildContext context, Task task, TasksProvider tasksProvider) {
+  void _showArchivedSnackBar(
+      BuildContext context, Task task, TasksProvider tasksProvider) {
+    // 移除当前的SnackBar，实现替换效果
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.hideCurrentSnackBar();
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('任务已归档: ${task.title}'),
@@ -20,13 +25,22 @@ class TaskList extends StatelessWidget {
             tasksProvider.toggleTaskCompletion(task.id, false);
           },
         ),
-        duration: Duration(seconds: 3), // 设置SnackBar的持续时长为3秒
+        // duration: Duration(seconds: 3), // 设置SnackBar的持续时长为3秒
       ),
     );
+    // 由于未知原因，SnackBar的duration属性不会生效，只能使用延时执行的方式在SnackBar持续3s后手动移除
+    Future.delayed(Duration(seconds: 3), () {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    });
   }
 
   // 显示任务已恢复为未完成状态的SnackBar
-  void _showUnarchivedSnackBar(BuildContext context, Task task, TasksProvider tasksProvider) {
+  void _showUnarchivedSnackBar(
+      BuildContext context, Task task, TasksProvider tasksProvider) {
+    // 移除当前的SnackBar，实现替换效果
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.hideCurrentSnackBar();
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('任务已恢复为未完成状态: ${task.title}'),
@@ -36,13 +50,18 @@ class TaskList extends StatelessWidget {
             tasksProvider.toggleTaskCompletion(task.id, true);
           },
         ),
-        duration: Duration(seconds: 3), // 设置SnackBar的持续时长为3秒
+        // duration: Duration(seconds: 3), // 设置SnackBar的持续时长为3秒
       ),
     );
+    // 由于未知原因，SnackBar的duration属性不会生效，只能使用延时执行的方式在SnackBar持续3s后手动移除
+    Future.delayed(Duration(seconds: 3), () {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    });
   }
 
   // 显示删除任务确认对话框
-  Future<void> _showDeleteConfirmationDialog(BuildContext context, Task task, TasksProvider tasksProvider) async {
+  Future<void> _showDeleteConfirmationDialog(
+      BuildContext context, Task task, TasksProvider tasksProvider) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // 点击外部区域时不关闭对话框
@@ -101,14 +120,16 @@ class TaskList extends StatelessWidget {
             ],
           ),
           trailing: Text(task.dueDate.toString()),
-          onTap: () { // 新增onTap事件，用于导航到任务编辑页面
+          onTap: () {
+            // 新增onTap事件，用于导航到任务编辑页面
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => EditTaskScreen(task: task),
               ),
             );
           },
-          onLongPress: () { // 新增长按事件，用于显示删除任务确认对话框
+          onLongPress: () {
+            // 新增长按事件，用于显示删除任务确认对话框
             _showDeleteConfirmationDialog(context, task, tasksProvider);
           },
         );

@@ -22,7 +22,7 @@ class _QuadrantGridState extends State<QuadrantGrid>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
@@ -56,7 +56,7 @@ class _QuadrantGridState extends State<QuadrantGrid>
                     onPressed: () {
                       tasksProvider.toggleTaskCompletion(
                           tasks[index].id, !newValue);
-                    },
+                      },
                   ),
                   // duration: Duration(seconds: 3), // 设置SnackBar的持续时长为3秒
                 ),

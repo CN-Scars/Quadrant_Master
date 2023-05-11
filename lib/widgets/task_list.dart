@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quadrant_master/models/task.dart';
 import 'package:quadrant_master/providers/tasks_provider.dart';
-import 'package:quadrant_master/screens/edit_task_screen.dart'; // 新增导入
+import 'package:quadrant_master/screens/edit_task_screen.dart';
 import 'package:provider/provider.dart';
 
 class TaskList extends StatelessWidget {
@@ -111,21 +111,36 @@ class TaskList extends StatelessWidget {
               }
             },
           ),
-          title: Text(
-            task.title,
+          title: AnimatedDefaultTextStyle(
             style: task.isCompleted // 根据任务的完成状态决定任务标题的文字样式
                 ? TextStyle(
                     color: Colors.grey,
                     decoration: TextDecoration.lineThrough,
                   )
-                : null,
+                : TextStyle(color: Colors.black),
+            duration: const Duration(milliseconds: 200),
+            child: Text(task.title),
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(task.description),
-              Text('优先级：${task.priority.toShortString()}'),
-            ],
+          subtitle: AnimatedCrossFade(
+            // 修改了这里
+            firstChild: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(task.description),
+                Text('优先级：${task.priority.toShortString()}'),
+              ],
+            ),
+            secondChild: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(task.description),
+                Text('优先级：${task.priority.toShortString()}'),
+              ],
+            ),
+            crossFadeState: task.isCompleted
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 200),
           ),
           trailing: Text(task.dueDate.toString()),
           onTap: () {

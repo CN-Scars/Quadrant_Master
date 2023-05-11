@@ -21,10 +21,20 @@ class TasksProvider extends ChangeNotifier {
 
   List<Task> getTasksByQuadrant(int quadrant) {
     // 筛选出指定象限的任务
-    List<Task> filteredTasks = _tasks.where((task) => task.quadrant == quadrant).toList();
+    List<Task> filteredTasks =
+        _tasks.where((task) => task.quadrant == quadrant).toList();
 
-    // 根据任务优先级对任务进行排序
-    filteredTasks.sort((a, b) => b.priority.index.compareTo(a.priority.index));
+    // 根据任务的完成状态和完成时间进行排序
+    filteredTasks.sort((a, b) {
+      if (a.isCompleted != b.isCompleted) {
+        return a.isCompleted ? 1 : -1;
+      } else if (a.isCompleted && b.isCompleted) {
+        return b.completedAt!.compareTo(a.completedAt!); // 早完成的任务排在晚完成的任务后面
+      } else {
+        return b.priority.index.compareTo(a.priority.index);
+      }
+    });
+
     return filteredTasks;
   }
 
@@ -42,6 +52,8 @@ class TasksProvider extends ChangeNotifier {
         quadrant: _tasks[taskIndex].quadrant,
         dueDate: _tasks[taskIndex].dueDate,
         isCompleted: isCompleted,
+        completedAt: isCompleted ? DateTime.now() : null,
+        // 设置任务完成的时间
         priority: _tasks[taskIndex].priority,
       );
       saveTasks(); // 保存任务列表
@@ -80,7 +92,9 @@ class TasksProvider extends ChangeNotifier {
 
   // 获取未归档的任务
   List<Task> getUnarchivedTasksByQuadrant(int quadrant) {
-    List<Task> filteredTasks = _tasks.where((task) => task.quadrant == quadrant && !task.isCompleted).toList();
+    List<Task> filteredTasks = _tasks
+        .where((task) => task.quadrant == quadrant && !task.isCompleted)
+        .toList();
     filteredTasks.sort((a, b) => b.priority.index.compareTo(a.priority.index));
     return filteredTasks;
   }
@@ -88,8 +102,8 @@ class TasksProvider extends ChangeNotifier {
   List<Task> searchTasks(String query) {
     return _tasks
         .where((task) =>
-    task.title.toLowerCase().contains(query.toLowerCase()) ||
-        task.description.toLowerCase().contains(query.toLowerCase()))
+            task.title.toLowerCase().contains(query.toLowerCase()) ||
+            task.description.toLowerCase().contains(query.toLowerCase()))
         .toList();
   }
 

@@ -111,7 +111,15 @@ class TaskList extends StatelessWidget {
               }
             },
           ),
-          title: Text(task.title),
+          title: Text(
+            task.title,
+            style: task.isCompleted // 根据任务的完成状态决定任务标题的文字样式
+                ? TextStyle(
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough,
+                  )
+                : null,
+          ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

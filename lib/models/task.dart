@@ -6,6 +6,7 @@ class Task {
   final DateTime dueDate; // 任务截止日期
   final int quadrant; // 任务所属象限（1-4）
   final bool isCompleted; // 任务的完成状态
+  final DateTime? completedAt; // 任务完成的时间
   final TaskPriority priority; // 任务优先级
 
   // 构造函数，用于创建 Task 对象
@@ -17,6 +18,7 @@ class Task {
     required this.dueDate,
     required this.priority,
     this.isCompleted = false,
+    this.completedAt,
   });
 
   // 将任务对象转换为 JSON
@@ -28,7 +30,7 @@ class Task {
     'dueDate': dueDate.toIso8601String(),
     'priority': priority.index,
     'isCompleted': isCompleted,
-    // 可以在此根据需要添加其他字段
+    'completedAt': completedAt?.toIso8601String(),
   };
 
   // 从 JSON 创建任务
@@ -41,7 +43,7 @@ class Task {
       dueDate: DateTime.parse(json['dueDate']),
       priority: TaskPriority.values[json['priority']],
       isCompleted: json['isCompleted'],
-      // 可以在此根据需要添加其他字段
+      completedAt: json['completedAt'] != null ? DateTime.parse(json['completedAt']) : null,
     );
   }
 }

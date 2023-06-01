@@ -101,12 +101,27 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     lastDate: DateTime.now().add(Duration(days: 365 * 5)),
                   );
                   if (selectedDate != null) {
-                    setState(() {
-                      _dueDate = selectedDate;
-                    });
+                    // 用户选择了日期，接下来弹出时间选择器
+                    final selectedTime = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.fromDateTime(_dueDate),
+                    );
+                    if (selectedTime != null) {
+                      // 用户选择了时间，将日期和时间组合成一个DateTime对象
+                      setState(() {
+                        _dueDate = DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedTime.hour,
+                          selectedTime.minute,
+                        );
+                      });
+                    }
                   }
                 },
-                child: Text('选择截止日期：${DateFormat('yyyy-MM-dd').format(_dueDate)}'),
+                child: Text(
+                    '选择截止日期和时间：${DateFormat('yyyy-MM-dd HH:mm:ss').format(_dueDate)}'),
               ),
               SizedBox(height: 16),
               ElevatedButton(

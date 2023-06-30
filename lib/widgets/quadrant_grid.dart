@@ -56,7 +56,7 @@ class _QuadrantGridState extends State<QuadrantGrid>
                     onPressed: () {
                       tasksProvider.toggleTaskCompletion(
                           tasks[index].id, !newValue);
-                      },
+                    },
                   ),
                   // duration: Duration(seconds: 3), // 设置SnackBar的持续时长为3秒
                 ),
@@ -76,6 +76,8 @@ class _QuadrantGridState extends State<QuadrantGrid>
   @override
   Widget build(BuildContext context) {
     final tasksProvider = Provider.of<TasksProvider>(context);
+    final colorScheme = Theme.of(context).colorScheme; // 获取当前主题的颜色
+
     return Scaffold(
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -97,7 +99,7 @@ class _QuadrantGridState extends State<QuadrantGrid>
                   margin: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0),
-                    color: Colors.blue.shade200,
+                    color: colorScheme.primary.withOpacity(0.4),
                   ),
                   child: Column(
                     children: [
@@ -128,7 +130,7 @@ class _QuadrantGridState extends State<QuadrantGrid>
                                           ? '不紧急'
                                           : index == 2
                                               ? '不重要'
-                                              : '且紧急',
+                                              : '且不紧急',
                                   style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),

@@ -18,6 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;  // 获取当前主题的颜色
+
     return Scaffold(
       appBar: AppBar(
         title: Text('时间四象限'),
@@ -28,7 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                // color: Colors.blue,
+                color: colorScheme.secondary.withOpacity(0.80),
               ),
               child: Text(
                 '菜单',

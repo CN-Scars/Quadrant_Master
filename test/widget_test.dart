@@ -14,7 +14,7 @@ void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     // 由于在 main.dart 文件中移除了 const MyApp() 的 const 修饰符，因此在 widget_test.dart 中也需要将其更改为非 const 构造函数。
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(MyApp(navigatorKey));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -19,7 +19,7 @@ class QuadrantDetailScreen extends StatelessWidget {
       case 3:
         return '紧急不重要';
       case 4:
-        return '不重要且紧急';
+        return '不重要且不紧急';
       default:
         return '未知象限';
     }
@@ -29,6 +29,7 @@ class QuadrantDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final tasksProvider = Provider.of<TasksProvider>(context);
     final List<Task> quadrantTasks = tasksProvider.getTasksByQuadrant(quadrant);
+    final colorScheme = Theme.of(context).colorScheme; // 获取当前主题的颜色
 
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +44,8 @@ class QuadrantDetailScreen extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
-                color: Colors.blue.shade200,
+                color: colorScheme.primary.withOpacity(0.4),
+                // color: Colors.blue.shade200,
               ),
               child: TaskList(tasks: quadrantTasks),
             ),

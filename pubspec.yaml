@@ -30,12 +30,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.0.0
-  intl: ^0.17.0
-  url_launcher: ^6.1.10 # 添加url_launcher包，用于打开外部链接
-  material_design_icons_flutter: 6.0.7096 # Material图标包
-  shared_preferences: ^2.0.13 # 在本地持久化存储应用数据
+  provider: ^6.0.5
+  intl: ^0.18.1
+  url_launcher: ^6.1.11 # 添加url_launcher包，用于打开外部链接
+  material_design_icons_flutter: ^7.0.7296 # Material图标包
+  shared_preferences: ^2.1.2 # 在本地持久化存储应用数据
   flutter_sequence_animation: ^4.0.0
+  flutter_local_notifications: ^14.1.1
+  dynamic_color: ^1.6.5
+  permission_handler: ^10.4.0 # 请求和检查权限
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

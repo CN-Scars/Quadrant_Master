@@ -1,22 +1,27 @@
 // lib/providers/tasks_provider.dart
-
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:quadrant_master/models/task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 class TasksProvider extends ChangeNotifier {
   List<Task> _tasks = [];
 
   List<Task> get tasks => _tasks;
 
-  void addTask(Task task) {
+  Future<void> addTask(Task task) async {
     _tasks.add(task);
     saveTasks(); // 保存任务列表
 
     // 通知侦听器数据已更改
     notifyListeners();
+
+    // 调度通知
+    await _scheduleNotification(task);
   }
 
   List<Task> getTasksByQuadrant(int quadrant) {
@@ -60,11 +65,31 @@ class TasksProvider extends ChangeNotifier {
 
       // 通知侦听器数据已更改
       notifyListeners();
+
+      if (isCompleted) {
+        // 如果任务已完成, 取消关于该任务的通知
+        int notificationId;
+        try {
+          notificationId = int.parse(taskId);
+        } catch (e) {
+          notificationId = taskIndex;
+        }
+        flutterLocalNotificationsPlugin.cancel(notificationId);
+      }
     }
   }
 
   // 删除指定ID的任务
   void deleteTask(String taskId) {
+    int notificationId;
+    try {
+      notificationId = int.parse(taskId);
+    } catch (e) {
+      notificationId = _tasks.indexWhere((task) => task.id == taskId);
+    }
+    // 取消关于该任务的通知
+    flutterLocalNotificationsPlugin.cancel(notificationId);
+
     _tasks.removeWhere((task) => task.id == taskId);
     saveTasks(); // 保存任务列表
 
@@ -122,6 +147,40 @@ class TasksProvider extends ChangeNotifier {
       List<dynamic> tasksList = jsonDecode(tasksJson);
       _tasks.clear();
       _tasks.addAll(tasksList.map((json) => Task.fromJson(json)).toList());
+    }
+  }
+
+  Future<void> _scheduleNotification(Task task) async {
+    if (task.dueDate != null) {
+      var scheduledNotificationDateTime = task.dueDate;
+      var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+          'task_reminder', 'Task Reminder',
+          channelDescription: 'Reminder for task due dates',
+          icon: '@mipmap/ic_launcher',
+          importance: Importance.max,
+          priority: Priority.high,
+          ticker: 'ticker');
+
+      var platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+
+      int notificationId;
+
+      try {
+        notificationId = int.parse(task.id);
+      } catch (e) {
+        // 如果转换失败，使用一个备用方法来生成通知ID，比如使用任务在列表中的索引
+        notificationId = _tasks.indexOf(task);
+      }
+
+      await flutterLocalNotificationsPlugin.schedule(
+          notificationId,
+          'Task Reminder',
+          'You have a task: ${task.title}',
+          scheduledNotificationDateTime!,
+          platformChannelSpecifics,
+          // payload: task.id.toString()); // 有效负载，表示象限编号
+          payload: task.quadrant.toString());
     }
   }
 }

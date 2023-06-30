@@ -19,11 +19,11 @@ class SearchTaskScreen extends StatelessWidget {
       ),
       body: tasks.isEmpty
           ? Center(
-        child: Text(
-          '没有找到相关任务',
-          style: TextStyle(fontSize: 18),
-        ),
-      )
+              child: Text(
+                '没有找到相关任务',
+                style: TextStyle(fontSize: 18),
+              ),
+            )
           : TaskList(tasks: tasks),
     );
   }

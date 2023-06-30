@@ -23,15 +23,15 @@ class Task {
 
   // 将任务对象转换为 JSON
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'title': title,
-    'description': description,
-    'quadrant': quadrant,
-    'dueDate': dueDate.toIso8601String(),
-    'priority': priority.index,
-    'isCompleted': isCompleted,
-    'completedAt': completedAt?.toIso8601String(),
-  };
+        'id': id,
+        'title': title,
+        'description': description,
+        'quadrant': quadrant,
+        'dueDate': dueDate.toIso8601String(),
+        'priority': priority.index,
+        'isCompleted': isCompleted,
+        'completedAt': completedAt?.toIso8601String(),
+      };
 
   // 从 JSON 创建任务
   factory Task.fromJson(Map<String, dynamic> json) {
@@ -43,7 +43,9 @@ class Task {
       dueDate: DateTime.parse(json['dueDate']),
       priority: TaskPriority.values[json['priority']],
       isCompleted: json['isCompleted'],
-      completedAt: json['completedAt'] != null ? DateTime.parse(json['completedAt']) : null,
+      completedAt: json['completedAt'] != null
+          ? DateTime.parse(json['completedAt'])
+          : null,
     );
   }
 }

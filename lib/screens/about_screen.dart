@@ -5,7 +5,8 @@ import 'package:url_launcher/url_launcher.dart';
 class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    _launchGithubURL() async {  // 打开Github主页的方法
+    _launchGithubURL() async {
+      // 打开Github主页的方法
       const githubUrl = 'https://github.com/CN-Scars';
       if (await canLaunch(githubUrl)) {
         await launch(githubUrl);

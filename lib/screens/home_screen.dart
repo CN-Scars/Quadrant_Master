@@ -4,8 +4,6 @@ import 'package:quadrant_master/screens/completed_tasks_screen.dart';
 import 'package:quadrant_master/screens/quadrant_detail_screen.dart';
 import 'package:quadrant_master/screens/search_task_screen.dart'; // 新增导入
 import 'package:quadrant_master/widgets/quadrant_grid.dart';
-import 'package:provider/provider.dart';
-import 'package:quadrant_master/providers/tasks_provider.dart';
 import 'package:quadrant_master/screens/about_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;  // 获取当前主题的颜色
+    final colorScheme = Theme.of(context).colorScheme; // 获取当前主题的颜色
 
     return Scaffold(
       appBar: AppBar(
@@ -98,7 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: (int quadrant) {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => QuadrantDetailScreen(quadrant: quadrant),
+                  builder: (context) =>
+                      QuadrantDetailScreen(quadrant: quadrant),
                 ),
               );
             },

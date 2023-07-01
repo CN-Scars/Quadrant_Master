@@ -68,12 +68,7 @@ class TasksProvider extends ChangeNotifier {
 
       if (isCompleted) {
         // 如果任务已完成, 取消关于该任务的通知
-        int notificationId;
-        try {
-          notificationId = int.parse(taskId);
-        } catch (e) {
-          notificationId = taskIndex;
-        }
+        int notificationId = taskId.hashCode; // 使用哈希码作为通知ID
         flutterLocalNotificationsPlugin.cancel(notificationId);
       }
     }
@@ -81,12 +76,7 @@ class TasksProvider extends ChangeNotifier {
 
   // 删除指定ID的任务
   void deleteTask(String taskId) {
-    int notificationId;
-    try {
-      notificationId = int.parse(taskId);
-    } catch (e) {
-      notificationId = _tasks.indexWhere((task) => task.id == taskId);
-    }
+    int notificationId = taskId.hashCode; // 使用哈希码作为通知ID
     // 取消关于该任务的通知
     flutterLocalNotificationsPlugin.cancel(notificationId);
 
@@ -101,8 +91,16 @@ class TasksProvider extends ChangeNotifier {
   void updateTask(Task updatedTask) {
     final taskIndex = _tasks.indexWhere((task) => task.id == updatedTask.id);
     if (taskIndex != -1) {
+      // 取消原来的通知
+      int notificationId = updatedTask.id.hashCode; // 使用哈希码作为通知ID
+      flutterLocalNotificationsPlugin.cancel(notificationId);
+
+      // 更新任务
       _tasks[taskIndex] = updatedTask;
       saveTasks(); // 保存任务列表
+
+      // 根据新的截至时间重新调度通知
+      _scheduleNotification(updatedTask);
 
       // 通知侦听器数据已更改
       notifyListeners();
@@ -164,14 +162,7 @@ class TasksProvider extends ChangeNotifier {
       var platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
 
-      int notificationId;
-
-      try {
-        notificationId = int.parse(task.id);
-      } catch (e) {
-        // 如果转换失败，使用一个备用方法来生成通知ID，比如使用任务在列表中的索引
-        notificationId = _tasks.indexOf(task);
-      }
+      int notificationId = task.id.hashCode; // 使用哈希码作为通知ID
 
       await flutterLocalNotificationsPlugin.schedule(
           notificationId,

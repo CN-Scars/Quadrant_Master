@@ -66,10 +66,14 @@ class TasksProvider extends ChangeNotifier {
       // 通知侦听器数据已更改
       notifyListeners();
 
+      int notificationId = taskId.hashCode; // 使用哈希码作为通知ID
+
       if (isCompleted) {
         // 如果任务已完成, 取消关于该任务的通知
-        int notificationId = taskId.hashCode; // 使用哈希码作为通知ID
         flutterLocalNotificationsPlugin.cancel(notificationId);
+      } else {
+        // 如果任务被标记为未完成, 需要重新调度通知
+        _scheduleNotification(_tasks[taskIndex]);
       }
     }
   }

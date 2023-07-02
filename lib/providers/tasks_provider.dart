@@ -153,7 +153,7 @@ class TasksProvider extends ChangeNotifier {
   }
 
   Future<void> _scheduleNotification(Task task) async {
-    if (task.dueDate != null) {
+    if (task.dueDate != null && task.dueDate!.isAfter(DateTime.now())) {
       var scheduledNotificationDateTime = task.dueDate;
       var androidPlatformChannelSpecifics = AndroidNotificationDetails(
           'task_reminder', 'Task Reminder',
@@ -174,7 +174,6 @@ class TasksProvider extends ChangeNotifier {
           'You have a task: ${task.title}',
           scheduledNotificationDateTime!,
           platformChannelSpecifics,
-          // payload: task.id.toString()); // 有效负载，表示象限编号
           payload: task.quadrant.toString());
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:quadrant_master/models/task.dart';
 import 'package:quadrant_master/providers/tasks_provider.dart';
 import 'package:quadrant_master/screens/edit_task_screen.dart';
@@ -18,7 +19,7 @@ class TaskList extends StatelessWidget {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('任务已归档: ${task.title}'),
+        content: Text('任务 “${task.title}” 已归档'),
         action: SnackBarAction(
           label: '撤销',
           onPressed: () {
@@ -43,7 +44,7 @@ class TaskList extends StatelessWidget {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('任务已恢复为未完成状态: ${task.title}'),
+        content: Text('任务 “${task.title}” 已恢复为未完成状态'),
         action: SnackBarAction(
           label: '撤销',
           onPressed: () {
@@ -114,15 +115,14 @@ class TaskList extends StatelessWidget {
           title: AnimatedDefaultTextStyle(
             style: task.isCompleted // 根据任务的完成状态决定任务标题的文字样式
                 ? TextStyle(
-                    color: Colors.grey,
-                    decoration: TextDecoration.lineThrough,
-                  )
+              color: Colors.grey,
+              decoration: TextDecoration.lineThrough,
+            )
                 : TextStyle(color: Colors.black),
             duration: const Duration(milliseconds: 200),
             child: Text(task.title),
           ),
           subtitle: AnimatedCrossFade(
-            // 修改了这里
             firstChild: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -142,7 +142,8 @@ class TaskList extends StatelessWidget {
                 : CrossFadeState.showFirst,
             duration: const Duration(milliseconds: 200),
           ),
-          trailing: Text(task.dueDate.toString()),
+          trailing: Text(DateFormat('yyyy-MM-dd HH:mm').format(task.dueDate).toString()),
+          // trailing: Text(task.dueDate.toString()),
           onTap: () {
             // 新增onTap事件，用于导航到任务编辑页面
             Navigator.of(context).push(

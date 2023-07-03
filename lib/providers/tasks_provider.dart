@@ -170,8 +170,8 @@ class TasksProvider extends ChangeNotifier {
 
       await flutterLocalNotificationsPlugin.schedule(
           notificationId,
-          'Task Reminder',
-          'You have a task: ${task.title}',
+          '你有一个任务已到期！',
+          '任务 “${task.title}” 已到达截至时间！',
           scheduledNotificationDateTime!,
           platformChannelSpecifics,
           payload: task.quadrant.toString());

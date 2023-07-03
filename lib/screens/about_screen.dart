@@ -44,7 +44,7 @@ class AboutScreen extends StatelessWidget {
             margin: EdgeInsets.all(16.0),
             child: ListTile(
               leading: Icon(MdiIcons.patreon),
-              subtitle: Text('支持开发者'),
+              subtitle: Text('向开发者捐赠以支持开发者'),
               title: Text('Scars'),
               onTap: _launchPatreonURL,
             ),

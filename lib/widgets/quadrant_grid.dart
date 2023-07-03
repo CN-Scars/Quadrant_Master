@@ -50,7 +50,7 @@ class _QuadrantGridState extends State<QuadrantGrid>
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('任务已归档'),
+                  content: Text('任务 “${tasks[index].title}” 已归档'),
                   action: SnackBarAction(
                     label: '撤销',
                     onPressed: () {
@@ -88,7 +88,7 @@ class _QuadrantGridState extends State<QuadrantGrid>
         ),
         itemBuilder: (context, index) {
           final quadrantTasks =
-              tasksProvider.getUnarchivedTasksByQuadrant(index + 1);
+          tasksProvider.getUnarchivedTasksByQuadrant(index + 1);
           return GestureDetector(
             onTap: () => widget.onTap(index + 1),
             child: Hero(
@@ -112,10 +112,10 @@ class _QuadrantGridState extends State<QuadrantGrid>
                                   text: index == 0
                                       ? '重要'
                                       : index == 1
-                                          ? '重要'
-                                          : index == 2
-                                              ? '紧急'
-                                              : '不重要',
+                                      ? '重要'
+                                      : index == 2
+                                      ? '紧急'
+                                      : '不重要',
                                   style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
@@ -127,10 +127,10 @@ class _QuadrantGridState extends State<QuadrantGrid>
                                   text: index == 0
                                       ? '且紧急'
                                       : index == 1
-                                          ? '不紧急'
-                                          : index == 2
-                                              ? '不重要'
-                                              : '且不紧急',
+                                      ? '不紧急'
+                                      : index == 2
+                                      ? '不重要'
+                                      : '且不紧急',
                                   style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
@@ -143,10 +143,10 @@ class _QuadrantGridState extends State<QuadrantGrid>
                       ),
                       quadrantTasks.isNotEmpty
                           ? Expanded(
-                              flex: 2,
-                              child: _buildTaskList(context, index + 1,
-                                  quadrantTasks, tasksProvider),
-                            )
+                        flex: 2,
+                        child: _buildTaskList(context, index + 1,
+                            quadrantTasks, tasksProvider),
+                      )
                           : SizedBox(),
                     ],
                   ),

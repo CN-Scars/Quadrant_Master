@@ -52,7 +52,7 @@ class Task {
 
 enum TaskPriority { low, medium, high }
 
-// 在 models/task.dart 文件中添加以下扩展方法
+// 扩展方法
 extension TaskPriorityExtension on TaskPriority {
   String toShortString() {
     switch (this) {

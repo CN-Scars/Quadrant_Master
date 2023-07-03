@@ -38,6 +38,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // 定义一个数组，表示象限的名称
+    List<String> quadrantNames = [
+      '重要且紧急',
+      '重要不紧急',
+      '紧急不重要',
+      '不重要且不紧急'
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text('添加任务'),
@@ -67,7 +75,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 items: List.generate(4, (index) {
                   return DropdownMenuItem<int>(
                     value: index + 1,
-                    child: Text('象限 ${index + 1}'),
+                    child: Text(quadrantNames[index]),
                   );
                 }),
                 onChanged: (value) {
@@ -121,7 +129,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   }
                 },
                 child: Text(
-                    '选择截止日期和时间：${DateFormat('yyyy-MM-dd HH:mm:ss').format(_dueDate)}'),
+                    '选择截止日期和时间：${DateFormat('yyyy-MM-dd HH:mm').format(_dueDate)}'),
               ),
               SizedBox(height: 16),
               ElevatedButton(

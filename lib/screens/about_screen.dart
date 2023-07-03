@@ -49,6 +49,21 @@ class AboutScreen extends StatelessWidget {
               onTap: _launchPatreonURL,
             ),
           ),
+          Card(
+            margin: EdgeInsets.all(16.0),
+            child: ListTile(
+              leading: Icon(Icons.collections_bookmark),
+              subtitle: Text('查看使用的开源库及许可证'),
+              title: Text('许可证'),
+              onTap: () {
+                showLicensePage(
+                  context: context,
+                  applicationName: '时间管理：象限大师', // 你的应用名称
+                  applicationVersion: '1.0.0', // 你的应用版本
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

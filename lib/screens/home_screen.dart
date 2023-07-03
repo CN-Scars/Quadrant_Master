@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('时间四象限'),
+        title: Text('时间管理：象限大师'),
       ),
       drawer: Drawer(
         child: ListView(

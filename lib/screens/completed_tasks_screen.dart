@@ -9,12 +9,21 @@ class CompletedTasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final tasksProvider = Provider.of<TasksProvider>(context);
     final List<Task> completedTasks = tasksProvider.getCompletedTasks();
+    final colorScheme = Theme.of(context).colorScheme; // 获取当前主题的颜色
 
     return Scaffold(
       appBar: AppBar(
         title: Text('已归档任务'),
       ),
-      body: TaskList(tasks: completedTasks),
+      body: Material(
+        type: MaterialType.transparency,
+        child: Container(
+          decoration: BoxDecoration(
+            color: colorScheme.primary.withOpacity(0.4), // 使用当前主题的主要颜色作为背景色，并设置透明度
+          ),
+          child: TaskList(tasks: completedTasks),
+        ),
+      ),
     );
   }
 }

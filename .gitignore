@@ -23,42 +23,49 @@
 .vscode/
 
 # Flutter/Dart/Pub related
-**/doc/api/
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-**/generated_plugin_registrant.dart
-.packages
-.pub-cache/
-.pub/
-build/
-flutter_*.png
+quadrant_master_frontend/**/doc/api/
+quadrant_master_frontend/.dart_tool/
+quadrant_master_frontend/.flutter-plugins
+quadrant_master_frontend/.flutter-plugins-dependencies
+quadrant_master_frontend/**/generated_plugin_registrant.dart
+quadrant_master_frontend/.packages
+quadrant_master_frontend/.pub-cache/
+quadrant_master_frontend/.pub/
+quadrant_master_frontend/build/
+quadrant_master_frontend/flutter_*.png
 
 # Android related
-**/android/**/gradle-wrapper.jar
-.gradle/
-**/android/captures/
-**/android/gradlew
-**/android/gradlew.bat
-**/android/local.properties
-**/android/**/GeneratedPluginRegistrant.java
+quadrant_master_frontend/**/android/**/gradle-wrapper.jar
+quadrant_master_frontend/.gradle/
+quadrant_master_frontend/**/android/captures/
+quadrant_master_frontend/**/android/gradlew
+quadrant_master_frontend/**/android/gradlew.bat
+quadrant_master_frontend/**/android/local.properties
+quadrant_master_frontend/**/android/**/GeneratedPluginRegistrant.java
 
 # iOS/XCode related
-**/ios/**/*.mode1v3
-**/ios/**/*.mode2v3
-**/ios/**/*.moved-aside
-**/ios/**/*.pbxuser
-**/ios/**/*.perspectivev3
-**/ios/**/*sync/
-**/ios/**/.sconsign.dblite
-**/ios/**/.tags*
-**/ios/**/.vagrant/
-**/ios/**/DerivedData/
-**/ios/**/Icon?
-**/ios/**/Pods/
-**/ios/**/.symlinks/
-**/ios/**/profile
-**/ios/**/xcuserdata
+quadrant_master_frontend/**/ios/**/*.mode1v3
+quadrant_master_frontend/**/ios/**/*.mode2v3
+quadrant_master_frontend/**/ios/**/*.moved-aside
+quadrant_master_frontend/**/ios/**/*.pbxuser
+quadrant_master_frontend/**/ios/**/*.perspectivev3
+quadrant_master_frontend/**/ios/**/*sync/
+quadrant_master_frontend/**/ios/**/.sconsign.dblite
+quadrant_master_frontend/**/ios/**/.tags*
+quadrant_master_frontend/**/ios/**/.vagrant/
+quadrant_master_frontend/**/ios/**/DerivedData/
+quadrant_master_frontend/**/ios/**/Icon?
+quadrant_master_frontend/**/ios/**/Pods/
+quadrant_master_frontend/**/ios/**/.symlinks/
+quadrant_master_frontend/**/ios/**/profile
+quadrant_master_frontend/**/ios/**/xcuserdata
+
+# Java/Spring Boot related
+quadrant_master_backend/target/
+quadrant_master_backend/**/target/
+quadrant_master_backend/**/build/
+quadrant_master_backend/*.log
+quadrant_master_backend/.gradle/
 
 # Exceptions to above rules.
 !default.pbxuser

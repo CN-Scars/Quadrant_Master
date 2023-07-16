@@ -1,31 +1,28 @@
 package com.scars.quadrant_master_backend.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String title;
     private String description;
+    private LocalDateTime dueDate;
     private int quadrant;
+    private boolean isCompleted;
+    private LocalDateTime completedAt;
+    private int priority;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    // Getters and Setters
 
-    public Task() {
-    }
-
-    //Getters and Setters
-
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -45,6 +42,14 @@ public class Task {
         this.description = description;
     }
 
+    public LocalDateTime getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDateTime dueDate) {
+        this.dueDate = dueDate;
+    }
+
     public int getQuadrant() {
         return quadrant;
     }
@@ -53,11 +58,27 @@ public class Task {
         this.quadrant = quadrant;
     }
 
-    public User getUser() {
-        return user;
+    public boolean isCompleted() {
+        return isCompleted;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 }

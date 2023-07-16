@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 // 使用 @Entity 注解标记这个类是一个 JPA 实体，对应数据库中的一个表。
 @Entity
@@ -18,6 +20,12 @@ public class User {
     // 用户名和密码字段
     private String username;
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
+
+    public User() {
+    }
 
     // Getter 和 Setter 方法
 
@@ -45,5 +53,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }
